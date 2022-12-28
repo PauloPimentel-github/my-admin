@@ -1,4 +1,4 @@
-import { Flex, Input, Button, Stack, FormLabel, FormControl } from '@chakra-ui/react'
+import { Flex, Input, Button, Stack, FormLabel, FormControl, Image } from '@chakra-ui/react'
 
 export default function Home() {
   return (
@@ -11,14 +11,24 @@ export default function Home() {
       <Flex 
         as='form' 
         width='100%'
-        maxWidth={360}
+        maxWidth={460}
         bg='gray.800'
-        boxShadow='dark-lg' 
+        boxShadow='4px 4px 8px 4px #4B4D63' 
         rounded='md'
         p='8'
         flexDir='column'
       >
         <Stack spacing='4'>
+          <div>
+            <Image
+              src='https://bit.ly/dan-abramov'
+              alt='Dan Abramov'
+              title='Dan Abramov'
+              borderRadius='full'
+              boxSize='50%'
+              margin='auto'
+            />
+          </div>
           <FormControl>
             <FormLabel htmlFor='email'>E-mail</FormLabel>
             <Input 
