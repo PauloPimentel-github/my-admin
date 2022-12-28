@@ -1,8 +1,31 @@
 import { Flex, Button, Stack, Image } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { Input } from '../components/Form/Input'
 
+type SignInFormData = {
+  email: string;
+  password: string;
+};
+
+const signInFormSchema = yup.object().shape({
+  email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+  password: yup.string().required('Senha obrigatória')
+})
+
 export default function SignIn() {
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(signInFormSchema)
+  })
+
+  const { errors } = formState
+
+  const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    console.log(values);
+  }
+
   return (
     <Flex 
       w='100vw' 
@@ -10,46 +33,53 @@ export default function SignIn() {
       align='center'
       justify='center' 
     >
-      <motion.div 
-        className='box'
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
+      <Flex 
+        as='form' 
+        width='100%'
+        maxWidth={460}
+        bg='gray.800'
+        boxShadow='4px 4px 8px 4px #4B4D63' 
+        rounded='md'
+        p='8'
+        flexDir='column'
+        onSubmit={handleSubmit(handleSignIn)}
       >
-        <Flex 
-          as='form' 
-          width='100%'
-          maxWidth={460}
-          bg='gray.800'
-          boxShadow='4px 4px 8px 4px #4B4D63' 
-          rounded='md'
-          p='8'
-          flexDir='column'
-        >
-          <Stack spacing='4'>
-            <div>
-              <Image
-                src='https://bit.ly/dan-abramov'
-                alt='Dan Abramov'
-                title='Dan Abramov'
-                borderRadius='full'
-                boxSize='50%'
-                margin='auto'
-              />
-            </div>
-            <Input type='email' name='email' label='E-mail' />
-            <Input type='password' name='password' label='Senha' />
-          </Stack>
+        <Stack spacing='4'>
+          <div>
+            <Image
+              src='https://bit.ly/dan-abramov'
+              alt='Dan Abramov'
+              title='Dan Abramov'
+              borderRadius='full'
+              boxSize='50%'
+              margin='auto'
+            />
+          </div>
+          <Input 
+            type='email' 
+            name='email' 
+            label='E-mail' 
+            error={errors.email}
+            {...register('email')}
+          />
+          <Input 
+            type='password' 
+            name='password' 
+            label='Senha' 
+            error={errors.password}
+            {...register('password')}
+          />
+        </Stack>
 
-          <Button 
-            type='submit' 
-            mt='6' 
-            colorScheme='purple'
-          >
-            Entrar
-          </Button>
-        </Flex>
-      </motion.div>
+        <Button 
+          type='submit' 
+          mt='6' 
+          colorScheme='purple'
+          isLoading={formState.isSubmitting}
+        >
+          Entrar
+        </Button>
+      </Flex>
     </Flex>
   )
 }
