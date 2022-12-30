@@ -1,8 +1,10 @@
-import { Flex, Button, Stack, Image } from '@chakra-ui/react'
+import { Flex, Button, Stack, Image, Box } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Input } from '../components/Form/Input'
+import { ErrorMessage } from '@hookform/error-message'
+import { Alert } from '../components/Alert/Alert'
 
 type SignInFormData = {
   email: string;
@@ -16,14 +18,16 @@ const signInFormSchema = yup.object().shape({
 
 export default function SignIn() {
   const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(signInFormSchema)
+    resolver: yupResolver(signInFormSchema),
+    reValidateMode: `onChange`,
+    mode: `onChange`,
   })
 
   const { errors } = formState
 
   const handleSignIn: SubmitHandler<SignInFormData> = async (values) => {
     await new Promise(resolve => setTimeout(resolve, 2000));
-    console.log(values);
+    console.log('Values:', values);
   }
 
   return (
@@ -45,7 +49,7 @@ export default function SignIn() {
         onSubmit={handleSubmit(handleSignIn)}
       >
         <Stack spacing='4'>
-          <div>
+          <Box>
             <Image
               src='https://bit.ly/dan-abramov'
               alt='Dan Abramov'
@@ -54,21 +58,23 @@ export default function SignIn() {
               boxSize='50%'
               margin='auto'
             />
-          </div>
+          </Box>
           <Input 
             type='email' 
             name='email' 
             label='E-mail' 
-            error={errors.email}
             {...register('email')}
           />
+          <ErrorMessage errors={errors} name='email' />
+          
           <Input 
             type='password' 
             name='password' 
             label='Senha' 
-            error={errors.password}
             {...register('password')}
           />
+          <ErrorMessage errors={errors} name='password' />
+          
         </Stack>
 
         <Button 
