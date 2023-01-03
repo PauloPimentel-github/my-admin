@@ -1,7 +1,8 @@
 import { createContext, ReactNode } from 'react'
+import { api } from '../services/api'
 
 type SignInCredentials = {
-    email: string;
+    username: string;
     password: string;
 }
 
@@ -19,9 +20,17 @@ export const AuthContext = createContext({} as AuthContextData)
 export function AuthProvider({ children }: AuthProviderProps) {
     const isAuthenticated = false;
 
-    async function signIn({ email, password }: SignInCredentials) {
-        console.log({ email, password });
-        
+    async function signIn({ username, password }: SignInCredentials) {
+        try {
+            const response = await api.post('/ead-authuser/auth/login', {
+                username,
+                password
+            })
+
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (

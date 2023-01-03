@@ -9,12 +9,12 @@ import { AuthContext } from '../contexts/AuthContext'
 import { useContext } from 'react'
 
 type SignInFormData = {
-  email: string;
+  username: string;
   password: string;
 };
 
 const signInFormSchema = yup.object().shape({
-  email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
+  username: yup.string().required('Username obrigatório'),
   password: yup.string().required('Senha obrigatória')
 })
 
@@ -32,7 +32,7 @@ export default function SignIn() {
     console.log('Submit:', values);
 
     const data = {
-      email: values.email,
+      username: values.username,
       password: values.password
     }
 
@@ -69,12 +69,12 @@ export default function SignIn() {
             />
           </Box>
           <Input 
-            type='email' 
-            name='email' 
-            label='E-mail' 
-            {...register('email')}
+            type='text' 
+            name='username' 
+            label='Username' 
+            {...register('username')}
           />
-          <ErrorMessage errors={errors} name='email' />
+          <ErrorMessage errors={errors} name='username' />
           
           <Input 
             type='password' 
