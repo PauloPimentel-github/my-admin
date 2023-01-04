@@ -1,10 +1,18 @@
 import Router from 'next/router'
-import { createContext, ReactNode, useState } from 'react'
-import { setCookie } from 'nookies'
+import { createContext, ReactNode, useEffect, useState } from 'react'
+import { setCookie, parseCookies } from 'nookies'
 import { api } from '../services/api'
+import jwtDecode from 'jwt-decode'
 
 type User = {
+    userId: string;
     username: string;
+}
+
+type Token = {
+    sub: string;
+    roles: string;
+    exp: number;
 }
 
 type SignInCredentials = {
@@ -28,6 +36,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User>();
     const isAuthenticated = !!user;
 
+    useEffect(() => {
+        const { 'my-admin.token': token } = parseCookies()
+
+        if (token) {
+            const decoded = jwtDecode<Token>(token)
+
+            api.get(`/ead-authuser/users/${decoded?.sub}`).then(response => {
+                const { userId, username } = response.data;
+                
+                setUser({ userId, username })
+            })
+        }
+    }, [])
+
     async function signIn({ username, password }: SignInCredentials) {
         try {
             const response = await api.post('/ead-authuser/auth/login', {
@@ -37,12 +59,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
             const { token } = response.data;
 
+            const decoded = jwtDecode<Token>(token)
+              
+            const userId = decoded.sub;
+
             setCookie(undefined, 'my-admin.token', token, {
                 maxAge: 60 * 60 * 24 * 30, // 30 days
                 path: '/'
             })
 
-            setUser({ username })
+            setUser({ userId, username })
+
+            api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
             Router.push('/dashboard')
 

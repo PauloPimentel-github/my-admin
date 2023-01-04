@@ -1,8 +1,17 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
+import { api } from '../services/api'
 
 export default function Dashboard() {
     const { user } = useContext(AuthContext)
+
+    useEffect(() => {
+        console.log('Dashboard', user);
+        
+        api.get(`/ead-authuser/users/${user?.userId}`)
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
+    }, [])
     
     return (
         <>
