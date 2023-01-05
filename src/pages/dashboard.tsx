@@ -7,9 +7,8 @@ export default function Dashboard() {
 
     useEffect(() => {
         if (user) {
-            console.log('Dashboard', user);
             api.get(`/ead-authuser/users/${user?.userId}`)
-            .then(response => console.log(response))
+            .then(response => console.log('Login Dashboard:', response))
             .catch(error => console.log(error));
         }
         

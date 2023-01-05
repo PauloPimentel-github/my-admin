@@ -1,8 +1,9 @@
 import Router from 'next/router'
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import { api } from '../services/api'
 import jwtDecode from 'jwt-decode'
+import { AxiosError } from 'axios'
 
 type User = {
     userId: string;
@@ -22,6 +23,7 @@ type SignInCredentials = {
 
 type AuthContextData = {
     signIn(credentials): Promise<void>;
+    signOut: () => void;
     user: User;
     isAuthenticated: boolean;
 }
@@ -32,6 +34,12 @@ type AuthProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextData)
 
+
+export function signOut() {
+    destroyCookie(undefined, 'my-admin.token')
+    Router.push('/')
+}
+  
 export function AuthProvider({ children }: AuthProviderProps) {
     const [user, setUser] = useState<User>();
     const isAuthenticated = !!user;
@@ -46,7 +54,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 const { userId, username } = response.data;
                 
                 setUser({ userId, username })
-            })
+            }).catch((error: AxiosError) => {
+                console.error('Error ao buscar dados do usuário...', error);
+                signOut()
+            });
         }
     }, [])
 
@@ -73,15 +84,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
             api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
             Router.push('/dashboard')
-
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
     }
 
     return (
-        <AuthContext.Provider value={{ signIn, user, isAuthenticated }}>
+        <AuthContext.Provider value={{ signIn, signOut, user, isAuthenticated }}>
             {children}
         </AuthContext.Provider>
     )
