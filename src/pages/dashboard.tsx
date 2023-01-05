@@ -2,6 +2,8 @@ import { useContext, useEffect } from 'react'
 import { AuthContext } from '../contexts/AuthContext'
 import { api } from '../services/api'
 
+import { Header } from '../components/Header/Header'
+
 export default function Dashboard() {
     const { user } = useContext(AuthContext)
 
@@ -16,7 +18,7 @@ export default function Dashboard() {
     
     return (
         <>
-            <h1>Dashboard: { user?.username }</h1>
+            <Header />
         </>
     )
 }
