@@ -6,11 +6,13 @@ export default function Dashboard() {
     const { user } = useContext(AuthContext)
 
     useEffect(() => {
-        console.log('Dashboard', user);
+        if (user) {
+            console.log('Dashboard', user);
+            api.get(`/ead-authuser/users/${user?.userId}`)
+            .then(response => console.log(response))
+            .catch(error => console.log(error));
+        }
         
-        api.get(`/ead-authuser/users/${user?.userId}`)
-        .then(response => console.log(response))
-        .catch(error => console.log(error));
     }, [])
     
     return (
