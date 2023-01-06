@@ -58,6 +58,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
                 console.error('Error ao buscar dados do usuário...', error);
                 signOut()
             });
+        } else {
+            signOut()
         }
     }, [])
 
