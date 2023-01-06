@@ -8,7 +8,6 @@ import { ApexOptions } from 'apexcharts'
 import { Header } from '../components/Header/Header'
 import { Sidebar } from '../components/Sidebar/Sidebar'
 
-
 const Chart = dynamic(() => import('react-apexcharts'), {
     ssr: false
 })
@@ -62,7 +61,7 @@ const options: ApexOptions = {
 };
 
 const series = [
-{ name: 'series1', data: [1, 120, 10, 28, 61, 18, 109] }
+    { name: 'series1', data: [1, 120, 10, 28, 61, 18, 109] }
 ]
 
 export default function Dashboard() {
@@ -72,7 +71,7 @@ export default function Dashboard() {
 
     setTimeout(() => {
         setShowChart(true);
-    }, 1);
+    }, 500);
 
     useEffect(() => {
         if (user) {
