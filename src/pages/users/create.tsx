@@ -8,7 +8,7 @@ import { ErrorMessage } from '@hookform/error-message'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import { Header } from '../../components/Header/Header'
+import { Header } from '../../components/Header'
 import { Sidebar } from '../../components/Sidebar/Sidebar'
 import { Input } from '../../components/Form/Input'
 

@@ -5,7 +5,7 @@ import { AuthContext } from '../contexts/AuthContext'
 import { api } from '../services/api'
 import { ApexOptions } from 'apexcharts'
 
-import { Header } from '../components/Header/Header'
+import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar/Sidebar'
 
 const Chart = dynamic(() => import('react-apexcharts'), {
