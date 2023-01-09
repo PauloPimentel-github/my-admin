@@ -36,21 +36,21 @@ export function Pagination({
 
   return (
     <Stack
-      direction={["column", "row"]}
-      spacing="6"
-      mt="8"
-      justify="space-between"
-      align="center"
+      direction={['column', 'row']}
+      spacing='6'
+      mt='8'
+      justify='space-between'
+      align='center'
     >
       <Box>
         <strong>0</strong> -  <strong>10</strong> de <strong>100</strong>
       </Box>
-      <Stack direction="row" spacing="2">
+      <Stack direction='row' spacing='2'>
         {currentPage > (1 + siblingsCount) && (
           <>
             <PaginationItem onPageChange={onPageChange} number={1} />
             { currentPage > (2 + siblingsCount) && (
-              <Text color="gray.300" width="8" textAlign="center">...</Text>
+              <Text color='gray.300' width='8' textAlign='center'>...</Text>
             )}
           </>
         )}
@@ -68,7 +68,7 @@ export function Pagination({
         {(currentPage + siblingsCount) < lastPage && (
           <>
             { (currentPage + 1 + siblingsCount) < lastPage && (
-              <Text color="gray.300" width="8" textAlign="center">...</Text>
+              <Text color='gray.300' width='8' textAlign='center'>...</Text>
             )}
             <PaginationItem onPageChange={onPageChange} number={lastPage} />
           </>

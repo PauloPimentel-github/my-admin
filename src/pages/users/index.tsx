@@ -1,11 +1,15 @@
-import { Flex, Box, Heading, Button, Icon, Table, Thead, Tr, Th, Checkbox, Tbody, Td, Text } from '@chakra-ui/react'
+import { Flex, Box, Heading, Button, Icon, Table, Thead, Tr, Th, Checkbox, Tbody, Td, Text, useBreakpointValue } from '@chakra-ui/react'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 
 import { Header } from '../../components/Header'
-import { PaginationItem } from '../../components/Pagination/PaginationItem'
-import { Sidebar } from '../../components/Sidebar/Sidebar'
+import { Sidebar } from '../../components/Sidebar'
 
 export default function UserList() {
+    const isWideVersion = useBreakpointValue({
+        base: false,
+        lg: true
+    })
+
     return (
         <Box>
             <Header />
@@ -36,13 +40,13 @@ export default function UserList() {
                                     <Checkbox colorScheme='purple' />
                                 </Th>
                                 <Th>Usuário</Th>
-                                <Th>Data de cadastro</Th>
+                                { isWideVersion && <Th>Data de cadastro</Th> }
                                 <Th width='8'></Th>
                             </Tr>
                         </Thead>
                         <Tbody>
                             <Tr>
-                                <Td px='6'>
+                                <Td px={['4', '4', '6']}>
                                     <Checkbox colorScheme='purple' />
                                 </Td>
                                 <Td>
@@ -51,7 +55,7 @@ export default function UserList() {
                                         <Text fontSize='sm' color='gray.300'>paulo.h.g.pimentel</Text>
                                     </Box>
                                 </Td>
-                                <Td>05 de Janeiro, 2023</Td>
+                                { isWideVersion && <Td>05 de Janeiro, 2023</Td> }
                                 <Td>
                                     <Button 
                                         as='a' 

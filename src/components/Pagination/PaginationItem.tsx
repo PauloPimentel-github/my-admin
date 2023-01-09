@@ -14,10 +14,10 @@ export function PaginationItem({
   if (isCurrent) {
     return (
       <Button
-        size="sm"
-        fontSize="sx"
-        width="4"
-        colorScheme="pink"
+        size='sm'
+        fontSize='sx'
+        width='4'
+        colorScheme='pink'
         disabled
         _disabled={{
           bg: 'purple.500',
@@ -31,10 +31,10 @@ export function PaginationItem({
 
   return (
     <Button
-      size="sm"
-      fontSize="sx"
-      width="4"
-      bg="gray.700"
+      size='sm'
+      fontSize='sx'
+      width='4'
+      bg='gray.700'
       _hover={{
         bg: 'gray.500',
       }}
