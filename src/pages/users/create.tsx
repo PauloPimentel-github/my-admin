@@ -9,7 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import { Header } from '../../components/Header'
-import { Sidebar } from '../../components/Sidebar/Sidebar'
+import { Sidebar } from '../../components/Sidebar'
 import { Input } from '../../components/Form/Input'
 
 type CreateUserFormData = {
@@ -103,7 +103,7 @@ export default function CreateUser() {
             <Flex mt='8' justify='flex-end'>
                 <HStack spacing='4'>
                     <Link href='/users' passHref>
-                        <Button colorScheme='whiteAlpha'>Cancelar</Button>
+                        <Button as='a' colorScheme='whiteAlpha'>Cancelar</Button>
                     </Link>
                     <Button type='submit' colorScheme='purple' isLoading={formState.isSubmitting}>
                         Salvar
