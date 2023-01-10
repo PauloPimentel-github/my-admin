@@ -1,12 +1,14 @@
 import { Flex, Button, Stack, Image, Box } from '@chakra-ui/react'
+import { useContext } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { ErrorMessage } from '@hookform/error-message'
-import { Input } from '../components/Form/Input'
 
 import { AuthContext } from '../contexts/AuthContext'
-import { useContext } from 'react'
+
+import { Input } from '../components/Form/Input'
+
 
 type SignInFormData = {
   username: string;
@@ -14,8 +16,8 @@ type SignInFormData = {
 };
 
 const signInFormSchema = yup.object().shape({
-  username: yup.string().required('Username obrigatório'),
-  password: yup.string().required('Senha obrigatória')
+  username: yup.string().required('Username é obrigatório'),
+  password: yup.string().required('Senha é obrigatória')
 })
 
 export default function SignIn() {
@@ -74,7 +76,9 @@ export default function SignIn() {
             label='Username' 
             {...register('username')}
           />
-          <ErrorMessage errors={errors} name='username' />
+          <Box color='red.300'>
+            <ErrorMessage errors={errors} name='username' />
+          </Box>
           
           <Input 
             type='password' 
@@ -82,7 +86,9 @@ export default function SignIn() {
             label='Senha' 
             {...register('password')}
           />
-          <ErrorMessage errors={errors} name='password' />
+          <Box color='red.300'>
+            <ErrorMessage errors={errors} name='password' />
+          </Box>
           
         </Stack>
 

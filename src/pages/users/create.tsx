@@ -20,9 +20,9 @@ type CreateUserFormData = {
 };
   
 const createUserFormSchema = yup.object().shape({
-    name: yup.string().required('Nome obrigatório'),
-    email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
-    password: yup.string().required('Senha obrigatória').min(6, 'No mínimo 6 caracteres'),
+    name: yup.string().required('Nome é obrigatório'),
+    email: yup.string().required('E-mail é obrigatório').email('E-mail é inválido'),
+    password: yup.string().required('Senha é obrigatória').min(6, 'No mínimo 6 caracteres'),
     password_confirmation: yup.string().oneOf([
         null, yup.ref('password')
     ], 'As senhas precisam ser iguais')
@@ -63,22 +63,29 @@ export default function CreateUser() {
 
             <Divider my='6' borderColor='gray.700' />
 
-            <VStack spacing='8'>
+            <VStack spacing='4'>
                 <SimpleGrid minChildWidth='240px' spacing={['6', '8']} w='100%'>
                     <Input 
                         name='name' 
                         label='Nome completo' 
                         {...register('name')}
                     />
-                    <ErrorMessage errors={errors} name='name' />
-
+                    
                     <Input 
                         name='email' 
                         type='email' 
                         label='E-mail' 
                         {...register('email')}
                     />
-                    <ErrorMessage errors={errors} name='email' />
+                </SimpleGrid>
+
+                <SimpleGrid minChildWidth='240px' spacing={['6', '8']} w='100%'>
+                    <Box color='red.300'>
+                        <ErrorMessage errors={errors} name='name' />
+                    </Box>
+                    <Box color='red.300'>
+                        <ErrorMessage errors={errors} name='email' />
+                    </Box>
                 </SimpleGrid>
 
                 <SimpleGrid minChildWidth='240px' spacing={['6', '8']} w='100%'>
@@ -88,7 +95,6 @@ export default function CreateUser() {
                         label='Senha'
                         {...register('password')} 
                     />
-                    <ErrorMessage errors={errors} name='password' />
 
                     <Input 
                         name='password_confirmation' 
@@ -96,8 +102,17 @@ export default function CreateUser() {
                         label='Confirmação da senha' 
                         {...register('password_confirmation')} 
                     />
-                    <ErrorMessage errors={errors} name='password_confirmation' />
                 </SimpleGrid>
+
+                <SimpleGrid minChildWidth='240px' spacing={['6', '8']} w='100%'>
+                    <Box color='red.300'>
+                        <ErrorMessage errors={errors} name='password' />
+                    </Box>
+                    <Box color='red.300'>
+                        <ErrorMessage errors={errors} name='password_confirmation' />
+                    </Box>
+                </SimpleGrid>
+
             </VStack>
 
             <Flex mt='8' justify='flex-end'>
