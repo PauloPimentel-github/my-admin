@@ -22,18 +22,17 @@ export default function UserList() {
                     <Flex mb='8' justify='space-between' align='center'>
                         <Heading size='lg' fontWeight='normal'>Usuários</Heading>
 
-                        <Link href='/users/create' passHref>
-                            <Button 
-                                as='a' 
-                                size='sm'
-                                fontSize='sm'
-                                colorScheme='purple'
-                                leftIcon={<Icon as={RiAddLine} fontSize='20' />}
-                                title='Criar novo'
-                            >
-                                Criar novo
-                            </Button>
-                        </Link>
+                        <Button 
+                            as={Link}
+                            size='sm'
+                            fontSize='sm'
+                            colorScheme='purple'
+                            leftIcon={<Icon as={RiAddLine} fontSize='20' />}
+                            title='Criar novo'
+                            href='/users/create'
+                        >
+                            Criar novo
+                        </Button>
                     </Flex>
 
                     <Table colorScheme='whiteAlpha'>
@@ -61,12 +60,13 @@ export default function UserList() {
                                 { isWideVersion && <Td>05 de Janeiro, 2023</Td> }
                                 <Td>
                                     <Button 
-                                        as='a' 
+                                        as={Link}
                                         size='sm'
                                         fontSize='sm'
                                         colorScheme='green'
                                         leftIcon={<Icon as={RiPencilLine} fontSize='16' />}
                                         title='Editar'
+                                        href='#'
                                     >
                                         Editar
                                     </Button>
